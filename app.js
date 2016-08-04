@@ -19,6 +19,16 @@ app.post(
 	}
 );
 
+app.post(
+	'/puzzle2',
+	(req, res) => {
+		if(req.body['answer'] == "og dluohs uoy")
+			console.log('passed');
+		else
+			res.sendStatus(404);
+	}
+);
+
 app.listen(3000, function () {
 	console.log('Example app listening on port 3000!');
 });
