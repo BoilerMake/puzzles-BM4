@@ -34,6 +34,7 @@ app.post(
 	(req, res) => {
 		res.status(200).send({spooked: 'boo'});
 	}
+);
 
 app.get(
 	'/donttalktomygoatorhiskideveragain',
