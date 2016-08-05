@@ -3,10 +3,10 @@ const brunch = spawn('brunch', ['watch'], {
 	stdio: 'inherit'
 });
 
-var express = require('express');
+const express = require('express');
 var app = express();
 app.use(express.static('public'));
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 app.post(
@@ -29,6 +29,22 @@ app.post(
 	}
 );
 
+app.post(
+	'/puzzle3',
+	(req, res) => {
+		res.status(200).send({spooked: 'boo'});
+	}
+
+app.get(
+	'/donttalktomygoatorhiskideveragain',
+	(req, res) => {
+		// TODO if they're on puzzle 3
+		console.log('passed');
+		res.redirect('/');
+		// TODO else res.sendStatus(404);
+	}
+);
+
 app.listen(3000, function () {
-	console.log('Example app listening on port 3000!');
+	console.log('Puzzles listening on port 3000!');
 });
