@@ -3,10 +3,13 @@ const brunch = spawn('brunch', ['watch'], {
 	stdio: 'inherit'
 });
 
+var CeaserPoly = require('./ceaser_poly.js');
+
 const express = require('express');
 var app = express();
 app.use(express.static('public'));
 const bodyParser = require('body-parser');
+const superSecretString = [0,5,2,2,5,2,8,4,3,4]
 app.use(bodyParser.json());
 
 app.post(
@@ -44,6 +47,25 @@ app.get(
 		res.redirect('/');
 		// TODO else res.sendStatus(404);
 	}
+);
+
+//TODO make it so that they can pass
+app.post(
+	'/puzzle4',
+	(req, res) => {
+
+	}
+);
+
+app.post(
+	// TODO if they're on puzzle 4
+	'/puzzle4/where',
+	(req, res) => {
+		//TODO make this sample from word pool
+		text = req.body['user_id'];
+		res.status(200).send(CeaserPoly.encrypt(text, superSecretString));
+	}
+	// TODO else res.sendStatus(404);
 );
 
 app.listen(3000, function () {

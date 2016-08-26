@@ -1,4 +1,4 @@
-const CeaserPoly = {
+var CeaserPoly = {
 	encrypt: (text, key) => {
 		return text.split('').reduce(
 			(memo, char, index) => {
@@ -23,4 +23,4 @@ const CeaserPoly = {
 	}
 };
 
-export CeaserPoly;
+module.exports = CeaserPoly;
