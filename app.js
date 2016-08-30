@@ -3,7 +3,8 @@ const brunch = spawn('brunch', ['watch'], {
 	stdio: 'inherit'
 });
 
-var CeaserPoly = require('./ceaser_poly.js');
+const CeaserPoly = require('./ceaser_poly.js');
+const WordPool = require('./word_pool.js');
 
 const express = require('express');
 var app = express();
@@ -62,8 +63,11 @@ app.post(
 	'/puzzle4/where',
 	(req, res) => {
 		//TODO make this sample from word pool
-		text = req.body['user_id'];
-		res.status(200).send(CeaserPoly.encrypt(text, superSecretString));
+		words = WordPool.generate(4, req.body['user_id'], 25);
+		text = words.map((word) => {
+			return CeaserPoly.encrypt(word, superSecretString);
+		}).join(".");
+		res.status(200).send(text);
 	}
 	// TODO else res.sendStatus(404);
 );
