@@ -5,6 +5,7 @@ const brunch = spawn('brunch', ['watch'], {
 
 const CeaserPoly = require('./ceaser_poly.js');
 const WordPool = require('./word_pool.js');
+const {getUserId, completePuzzle, getCompletedPuzzles} = require('./mainframe')
 
 const express = require('express');
 var app = express();
@@ -13,23 +14,31 @@ const bodyParser = require('body-parser');
 const superSecretString = [0,5,2,2,5,2,8,4,3,4]
 app.use(bodyParser.json());
 
+const getSecretWords = (token) => {
+	return WordPool.generate(4, getUserId(token), 25);
+}
+
 app.post(
 	'/puzzle1',
 	(req, res) => {
-		if(req.body['answer'] == "goats")
-			console.log('passed');
-		else
+		if(req.body['answer'] == "goats") {
+			completePuzzle("samuel", 1)
+			res.status(200).send({ok: 'completed'})
+		} else {
 			res.sendStatus(404);
+		}
 	}
 );
 
 app.post(
 	'/puzzle2',
 	(req, res) => {
-		if(req.body['answer'] == "og dluohs uoy")
-			console.log('passed');
-		else
+		if(req.body['answer'] == "og dluohs uoy") {
+			completePuzzle("samuel", 2)
+			res.status(200).send({ok: 'completed'})
+		} else {
 			res.sendStatus(404);
+		}
 	}
 );
 
@@ -43,10 +52,12 @@ app.post(
 app.get(
 	'/donttalktomygoatorhiskideveragain',
 	(req, res) => {
-		// TODO if they're on puzzle 3
-		console.log('passed');
-		res.redirect('/');
-		// TODO else res.sendStatus(404);
+		if (getCompletedPuzzles("samuel").indexOf(2) === -1) {
+			res.sendStatus(404)
+		} else {
+			completePuzzle("samuel", 2)
+			res.status(200).send({ok: 'completed'})
+		}
 	}
 );
 
@@ -54,7 +65,12 @@ app.get(
 app.post(
 	'/puzzle4',
 	(req, res) => {
-
+		const expected = getSecretWords(req.body['user_id']).join(".")
+		if(req.body['answer'] === expected) {
+			completePuzzle("samuel", 4);
+		} else {
+			res.status(200).send({error: 'that.was.wrong'});
+		}
 	}
 );
 
@@ -63,11 +79,11 @@ app.post(
 	'/puzzle4/where',
 	(req, res) => {
 		//TODO make this sample from word pool
-		words = WordPool.generate(4, req.body['user_id'], 25);
+		words = getSecretWords(req.body['user_id']);
 		text = words.map((word) => {
 			return CeaserPoly.encrypt(word, superSecretString);
 		}).join(".");
-		res.status(200).send(text);
+		res.status(200).send({text: text, words: words});
 	}
 	// TODO else res.sendStatus(404);
 );
