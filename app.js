@@ -18,6 +18,18 @@ const getSecretWords = (token) => {
 	return WordPool.generate(4, getUserId(token), 25);
 }
 
+app.get(
+  '/puzzle0',
+  (req, res) => {
+    if (req.headers.authentication !== 'undefined') {
+      completePuzzle(req.headers.authentication, 0)
+      res.status(200).send({ok: 'completed'})
+    } else {
+      res.status(200).send({error: 'new phone who dis'})
+    }
+  }
+)
+
 app.post(
 	'/puzzle1',
 	(req, res) => {
