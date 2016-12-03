@@ -1,14 +1,28 @@
+var request = require('superagent')
+var jwtDecode = require('jwt-decode')
+
 const MainFrame = {
   getUserId: (jwtToken) => {
-    return 1
+    return jwtDecode(jwtToken).user_id || 0
   },
 
   completePuzzle: (jwtToken, puzzleNumber) => {
-    console.log(`${jwtToken} completed ${puzzleNumber}`)
+    request
+      .post(`${process.env.API_ENPOINT}/v1/users/me/puzzles?puzzle_id=${puzzleNumber}&puzzle_secret=${process.env.PUZZLE_SECRET}&token=${jwtToken}`).then(
+        success => {},
+        fail => {console.log(fail)}
+      )
   },
 
   getCompletedPuzzles: (jwtToken) => {
-    return [1, 2, 3, 4, 5]
+   return request
+      .get(`${process.env.API_ENPOINT}/v1/users/me/puzzles?token=${jwtToken}`)
+      .then( res => {
+        return res.body.puzzles
+      }, reason => {
+        console.log(reason)
+        return undefined
+      })
   }
 }
 
