@@ -87,14 +87,14 @@ app.post(
 )
 
 app.get(
-  '/donttalktomygoatorhiskideveragain',
+  '/thetitleofthisvideobuteachbutisrecursivelyreplacedwithanothervideotitleofthisformexceptthelastoneinquotes',
   (req, res) => {
     if (req.headers.authorization
         && req.headers.authorization !== "undefined") {
-      getCompletedPuzzles(req.headers.authorizaiton)
+      getCompletedPuzzles(req.headers.authorization)
         .then(completed => {
           if(completed === undefined) {
-            res.sendStatus(404)
+            return res.sendStatus(404)
           }
           if(completed.indexOf(2) !== -1) {
             completePuzzle(req.headers.authorization, 3)
