@@ -190,6 +190,6 @@ app.get(
   }
 )
 
-app.listen(3000, function () {
-  console.log('Puzzles listening on port 3000!')
+app.listen(process.env.PORT, function () {
+  console.log(`Puzzles listening on port ${process.env.PORT}!`)
 })

@@ -6,4 +6,4 @@
     * [Brunch](http://brunch.io): `npm install -g brunch`
     * Brunch plugins and app dependencies: `npm install`
 * Run:
-    * `API_ENDPOINT="api.boilermake.org" PUZZLE_SECRET="YOUR SECRET" npm start` to start the server.
+    * `API_ENDPOINT="api.boilermake.org" PUZZLE_SECRET="YOUR SECRET" PORT="PORT NUMBER" npm start` to start the server.
