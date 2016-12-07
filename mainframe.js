@@ -1,5 +1,6 @@
 var request = require('superagent')
 var jwtDecode = require('jwt-decode')
+require('dotenv').config()
 
 const MainFrame = {
   getUserId: (jwtToken) => {

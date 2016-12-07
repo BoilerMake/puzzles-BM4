@@ -7,6 +7,7 @@ const CeaserPoly = require('./ceaser_poly.js')
 const WordPool = require('./word_pool.js')
 const {getUserId, completePuzzle, getCompletedPuzzles} = require('./mainframe')
 
+require('dotenv').config()
 const express = require('express')
 var app = express()
 app.use(express.static('public'))
