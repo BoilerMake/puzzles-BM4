@@ -9,7 +9,7 @@ const MainFrame = {
 
   completePuzzle: (jwtToken, puzzleNumber) => {
     request
-      .post(`${process.env.API_ENPOINT}/v1/users/me/puzzles?puzzle_id=${puzzleNumber}&puzzle_secret=${process.env.PUZZLE_SECRET}&token=${jwtToken}`).then(
+      .post(`${process.env.API_ENDPOINT}/v1/users/me/puzzles?puzzle_id=${puzzleNumber}&puzzle_secret=${process.env.PUZZLE_SECRET}&token=${jwtToken}`).then(
         success => {},
         fail => {console.log(fail)}
       )
@@ -17,7 +17,7 @@ const MainFrame = {
 
   getCompletedPuzzles: (jwtToken) => {
    return request
-      .get(`${process.env.API_ENPOINT}/v1/users/me/puzzles?token=${jwtToken}`)
+      .get(`${process.env.API_ENDPOINT}/v1/users/me/puzzles?token=${jwtToken}`)
       .then( res => {
         return res.body.puzzles
       }, reason => {
