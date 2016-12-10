@@ -55,7 +55,7 @@ app.get(
 app.post(
   '/puzzle1',
   (req, res) => {
-    if(req.body['answer'] === "goats"
+    if(req.body['answer'] === "goat"
        && req.headers.authorization
        && req.headers.authorization !== 'undefined') {
       completePuzzle(req.headers.authorization, 1)
