@@ -24,7 +24,7 @@ const MainFrame = {
       )
   },
 
-  getCompletedPuzzles: (authorizaiton) => {
+  getCompletedPuzzles: (authorization) => {
     const jwtToken = parseAuthorization(authorization)
     return request
       .get(`${process.env.API_ENDPOINT}/v1/users/me/puzzles?token=${jwtToken}`)
