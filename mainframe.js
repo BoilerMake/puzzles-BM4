@@ -3,11 +3,20 @@ var jwtDecode = require('jwt-decode')
 require('dotenv').config()
 
 const MainFrame = {
-  getUserId: (jwtToken) => {
+  parseAuthorization: (authorization) => {
+    if('Bearer ' === authorization.substring(0,7))
+      return authorization.substring(7)
+    else
+      return authorization
+  },
+
+  getUserId: (authorization) => {
+    const jwtToken = parseAuthorization(authorization)
     return jwtDecode(jwtToken).user_id || 0
   },
 
-  completePuzzle: (jwtToken, puzzleNumber) => {
+  completePuzzle: (authorization, puzzleNumber) => {
+    const jwtToken = parseAuthorization(authorization)
     request
       .post(`${process.env.API_ENDPOINT}/v1/users/me/puzzles?puzzle_id=${puzzleNumber}&puzzle_secret=${process.env.PUZZLE_SECRET}&token=${jwtToken}`).then(
         success => {},
@@ -15,8 +24,9 @@ const MainFrame = {
       )
   },
 
-  getCompletedPuzzles: (jwtToken) => {
-   return request
+  getCompletedPuzzles: (authorizaiton) => {
+    const jwtToken = parseAuthorization(authorization)
+    return request
       .get(`${process.env.API_ENDPOINT}/v1/users/me/puzzles?token=${jwtToken}`)
       .then( res => {
         return res.body.puzzles
